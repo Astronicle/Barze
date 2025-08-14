@@ -5,7 +5,7 @@ import Author from "./../assets/author.png";
 function Navbar() {
   return (
     <>
-      <div className="fixed top-0 left-0 w-full mb-20">
+      <div className="fixed top-0 left-0 mb-20 w-full">
         <div className="flex flex-row items-center justify-between bg-[#030712] p-4 text-lg font-semibold">
           <div className="flex flex-row items-center text-3xl font-extrabold">
             <img src={Logo} alt="Barze Logo" className="m-2 h-12" />
