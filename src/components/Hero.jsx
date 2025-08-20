@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 
 function Hero(props) {
   const barMode = props.barMode;
@@ -15,6 +16,17 @@ function Hero(props) {
       setBarMode(value);
     });
   }, []);
+
+  useHotkeys(
+    "ctrl+b",
+    (event) => {
+      event.preventDefault();
+      handleBarMode();
+    },
+    {
+      enableOnFormTags:["TEXTAREA"],
+    },
+  );
 
   if (!barMode) {
     return (
