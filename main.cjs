@@ -1,8 +1,10 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const fs = require("fs"); // for file management
 const path = require("path");
 
 let mainWindow = null;
 let barWindow = null;
+let selectedMdFilePath = null; // Global variable to hold the selected Markdown file path
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -84,7 +86,6 @@ ipcMain.on("changeBarMode", (event, msg) => {
     } else {
       createMainWindow();
     }
-
   } else if (mainWindow) {
     mainWindow.hide();
     if (!barWindow) {
@@ -92,8 +93,31 @@ ipcMain.on("changeBarMode", (event, msg) => {
     }
     if (barWindow) {
       barWindow.once("ready-to-show", () => {
-        barWindow.webContents.send("barModeChanged", true); // ✅ notify bar
+        barWindow.webContents.send("barModeChanged", true); // notify bar
       });
     }
+  }
+});
+
+ipcMain.handle("select-md-file", async () => {
+  const result = await dialog.showOpenDialog({
+    properties: ["openFile"],
+    filters: [{ name: "Markdown Files", extensions: ["md"] }],
+  });
+  if (result.canceled || result.filePaths.length === 0) return null;
+  selectedMdFilePath = result.filePaths[0]; // storing the selected file path
+  return selectedMdFilePath;
+});
+
+ipcMain.handle("get-md-file-path", async () => {
+  return selectedMdFilePath; // return the stored file path to the renderer
+});
+
+ipcMain.handle("append-to-md-file", async (event, filePath, text) => {
+  try {
+    fs.appendFileSync(filePath, text + "\n");
+    return true;
+  } catch (err) {
+    return false;
   }
 });
