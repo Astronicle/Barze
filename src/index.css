@@ -13,3 +13,21 @@ body {
   background-color: #1d202a;
   color: #00bcff;
 }
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.moving-gradient-bar {
+  background: linear-gradient(90deg, #3b82f6, #a78bfa, #ec4899, #3b82f6);
+  background-size: 300% 100%;
+  animation: gradientMove 4s linear infinite;
+}

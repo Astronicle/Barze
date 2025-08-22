@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import { FaFileAlt, FaArrowRight } from "react-icons/fa";
 
 function Hero(props) {
   const barMode = props.barMode;
@@ -50,34 +51,41 @@ function Hero(props) {
 
   if (!barMode) {
     return (
-      <>
-        <div className="flex w-full flex-col items-center justify-center">
-          <button
-            className="w-75 rounded-xl border-3 bg-white p-5 text-black hover:cursor-pointer"
-            onClick={handleSetFileLocation}
-          >
-            Set File Location
-          </button>
-          <div className="text-xs text-gray-500 mt-2">
-            {mdFilePath ? `Selected: ${mdFilePath}` : "No file selected"}
-          </div>
-          <button
-            className="w-75 rounded-xl border-3 bg-white p-5 text-black hover:cursor-pointer"
-            onClick={handleBarMode}
-            disabled={!mdFilePath} // disables the button if no file is selected
-          >
-            Enter Bar Mode!
-          </button>
+      <div className="flex w-full min-h-[60vh] flex-col items-center justify-center">
+        <button
+          className="flex items-center gap-2 w-80 rounded-xl border-2 border-gray-400 bg-white p-5 text-black text-lg font-semibold shadow hover:bg-gray-50 transition"
+          onClick={handleSetFileLocation}
+        >
+          <FaFileAlt className="text-blue-500" />
+          Set File Location
+        </button>
+        <div className="mt-4 w-80 rounded bg-gray-200 px-4 py-2 text-xs text-gray-700 border border-gray-300 shadow-inner">
+          {mdFilePath ? (
+            <>
+              <span className="font-bold text-green-700">Selected:</span>
+              <span className="ml-2 break-all">{mdFilePath}</span>
+            </>
+          ) : (
+            <span className="text-red-500">No file selected</span>
+          )}
         </div>
-      </>
+        <button
+          className={`flex items-center gap-2 w-80 mt-6 rounded-xl border-2 bg-blue-600 p-5 text-white text-lg font-semibold shadow hover:bg-blue-700 transition ${!mdFilePath ? "opacity-50 cursor-not-allowed" : ""}`}
+          onClick={handleBarMode}
+          disabled={!mdFilePath} // disables the button if no file is selected
+        >
+          <FaArrowRight />
+          Enter Bar Mode
+        </button>
+      </div>
     );
   } else {
     return (
       <>
         <textarea
-          ref={textareaRef} // reference to the textarea for potential future focus management THIS IS NOT USED IN THIS SNIPPET
+          ref={textareaRef}
           placeholder="Enter text..."
-          className="h-full w-full bg-white text-black"
+          className="h-24 w-full max-w-2xl mx-auto rounded-lg border-2 border-gray-300 bg-white text-black p-4 text-base shadow focus:outline-none focus:border-blue-500 transition"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)} // updates the input text state on change
           onKeyDown={handleTextareaKeyDown} // handles key down events for the textarea mainly for Enter key handling

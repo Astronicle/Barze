@@ -35,8 +35,8 @@ function createMainWindow() {
 
 function createBarWindow() {
   barWindow = new BrowserWindow({
-    width: 1000,
-    height: 60,
+    width: 675,      // Match max-w-2xl (Tailwind: 2xl = 672px)
+    height: 100,      // Match h-24 (Tailwind: 24 = 6rem = 96px)
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, "preload.js"),
