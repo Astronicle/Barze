@@ -9,17 +9,14 @@ function Hero(props) {
   const [inputText, setInputText] = useState(""); // state to hold the input text
   const textareaRef = useRef(null); // reference to the textarea for focus management (not used in this snippet but can be useful for future enhancements)
 
-  function handleBarMode() {
-    const newMode = !barMode;
-    window.electronAPI.changeBarMode(newMode ? "bar" : "main");
-  }
-
-  async function handleSetFileLocation() {
-    const filePath = await window.electronAPI.selectMdFile(); // opens a dialog to select a Markdown file
-    if (filePath) setMdFilePath(filePath); // sets the selected file path to state
-  }
-
+  // Load the last selected file path when the component mounts
   useEffect(() => {
+    async function fetchMdFilePath() {
+      const filePath = await window.electronAPI.getMdFilePath();
+      if (filePath) setMdFilePath(filePath);
+    }
+    fetchMdFilePath();
+
     window.electronAPI.onBarModeChanged(async (value) => {
       setBarMode(value);
       if (value) {
@@ -29,6 +26,16 @@ function Hero(props) {
       }
     });
   }, []);
+
+  function handleBarMode() {
+    const newMode = !barMode;
+    window.electronAPI.changeBarMode(newMode ? "bar" : "main");
+  }
+
+  async function handleSetFileLocation() {
+    const filePath = await window.electronAPI.selectMdFile(); // opens a dialog to select a Markdown file
+    if (filePath) setMdFilePath(filePath); // sets the selected file path to state
+  }
 
   useHotkeys(
     "ctrl+b",

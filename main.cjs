@@ -5,6 +5,7 @@ const path = require("path");
 let mainWindow = null;
 let barWindow = null;
 let selectedMdFilePath = null; // Global variable to hold the selected Markdown file path
+const SETTINGS_PATH = path.join(app.getPath("userData"), "settings.json"); //app.getPath("userData") gives a suitable directory for storing app data and we append settings.json to it.
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -62,7 +63,25 @@ function createBarWindow() {
   });
 }
 
+function saveSettings() {
+  fs.writeFileSync(SETTINGS_PATH, JSON.stringify({ mdFilePath: selectedMdFilePath || "" }, null, 2)); //creates or overwrites the settings file with the current mdFilePath 
+}
+
+function loadSettings() {
+  try {
+    if (fs.existsSync(SETTINGS_PATH)) {
+      const data = fs.readFileSync(SETTINGS_PATH, "utf-8");
+      const settings = JSON.parse(data);
+      selectedMdFilePath = settings.mdFilePath || null;
+    }
+  } catch (err) {
+    selectedMdFilePath = null;
+  }
+}
+
+// Load settings on startup
 app.whenReady().then(() => {
+  loadSettings();
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = "development";
   }
@@ -106,6 +125,7 @@ ipcMain.handle("select-md-file", async () => {
   });
   if (result.canceled || result.filePaths.length === 0) return null;
   selectedMdFilePath = result.filePaths[0]; // storing the selected file path
+  saveSettings(); // persist to disk
   return selectedMdFilePath;
 });
 
