@@ -18,7 +18,7 @@ function createMainWindow() {
   });
 
   // In dev mode, load from Vite's server
-  if (process.env.NODE_ENV === "development") {
+  if (!app.isPackaged) {
     mainWindow.loadURL("http://localhost:5173");
   } else {
     // In production, load the built React files
@@ -50,10 +50,10 @@ function createBarWindow() {
     y: 0,
   });
 
-  if (process.env.NODE_ENV === "development") {
+  if (!app.isPackaged) {
     barWindow.loadURL("http://localhost:5173/bar");
   } else {
-    barWindow.loadFile(path.join(__dirname, "dist/bar.html"), {
+    barWindow.loadFile(path.join(__dirname, "dist/index.html"), {
       hash: "bar",
     });
   }
@@ -64,7 +64,7 @@ function createBarWindow() {
 }
 
 function saveSettings() {
-  fs.writeFileSync(SETTINGS_PATH, JSON.stringify({ mdFilePath: selectedMdFilePath || "" }, null, 2)); //creates or overwrites the settings file with the current mdFilePath 
+  fs.writeFileSync(SETTINGS_PATH, JSON.stringify({ mdFilePath: selectedMdFilePath || "" }, null, 2)); //creates or overwrites the settings file with the current mdFilePath
 }
 
 function loadSettings() {
@@ -82,9 +82,6 @@ function loadSettings() {
 // Load settings on startup
 app.whenReady().then(() => {
   loadSettings();
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = "development";
-  }
   createMainWindow();
 });
 

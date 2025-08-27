@@ -11,7 +11,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "npm run build && electron-builder"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
@@ -39,5 +40,31 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "vite": "^7.1.0",
     "wait-on": "^8.0.4"
+  },
+  "build": {
+    "appId": "com.barze.app",
+    "productName": "Barze",
+    "icon": "./assets/ink_by_luvdat.ico",
+    "files": [
+      "dist/",
+      "main.cjs",
+      "preload.js",
+      "!node_modules/**/*",
+      "!node_modules/@esbuild/linux-*",
+      "!node_modules/@esbuild/darwin-*",
+      "!node_modules/@esbuild/freebsd-*",
+      "!node_modules/@esbuild/openbsd-*",
+      "!node_modules/@esbuild/netbsd-*",
+      "!node_modules/@esbuild/sunos-*",
+      "!node_modules/@esbuild/aix-*",
+      "!node_modules/@esbuild/android-*"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
