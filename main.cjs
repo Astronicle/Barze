@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, Menu } = require("electron");
 const fs = require("fs"); // for file management
 const path = require("path");
 
@@ -32,12 +32,13 @@ function createMainWindow() {
       barWindow = null;
     }
   });
+  Menu.setApplicationMenu(null);
 }
 
 function createBarWindow() {
   barWindow = new BrowserWindow({
-    width: 675,      // Match max-w-2xl (Tailwind: 2xl = 672px)
-    height: 100,      // Match h-24 (Tailwind: 24 = 6rem = 96px)
+    width: 675, 
+    height: 100, 
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, "preload.js"),
@@ -64,7 +65,10 @@ function createBarWindow() {
 }
 
 function saveSettings() {
-  fs.writeFileSync(SETTINGS_PATH, JSON.stringify({ mdFilePath: selectedMdFilePath || "" }, null, 2)); //creates or overwrites the settings file with the current mdFilePath
+  fs.writeFileSync(
+    SETTINGS_PATH,
+    JSON.stringify({ mdFilePath: selectedMdFilePath || "" }, null, 2),
+  ); //creates or overwrites the settings file with the current mdFilePath
 }
 
 function loadSettings() {

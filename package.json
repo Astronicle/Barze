@@ -44,23 +44,19 @@
   "build": {
     "appId": "com.barze.app",
     "productName": "Barze",
+    "directories": {
+      "buildResources": "assets"
+    },
     "icon": "./assets/ink_by_luvdat.ico",
     "files": [
       "dist/",
       "main.cjs",
       "preload.js",
-      "!node_modules/**/*",
-      "!node_modules/@esbuild/linux-*",
-      "!node_modules/@esbuild/darwin-*",
-      "!node_modules/@esbuild/freebsd-*",
-      "!node_modules/@esbuild/openbsd-*",
-      "!node_modules/@esbuild/netbsd-*",
-      "!node_modules/@esbuild/sunos-*",
-      "!node_modules/@esbuild/aix-*",
-      "!node_modules/@esbuild/android-*"
+      "!node_modules/**/*"
     ],
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "./assets/ink_by_luvdat.ico"
     },
     "nsis": {
       "oneClick": false,
