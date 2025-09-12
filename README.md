@@ -20,7 +20,7 @@ A multipurpose note-taking tool built with Electron, React, and Vite.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/barze.git
+    git clone https://github.com/Astronicle/barze.git
     cd barze
     ```
 2.  **Install dependencies:**
