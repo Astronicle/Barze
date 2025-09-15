@@ -2,12 +2,18 @@
 
 A multipurpose note-taking tool built with Electron, React, and Vite.
 
+A good companion for markdown-based note taking apps like Obsidian.
+
+![Barze Main Window](./assets/demo.png)
+
 ## Features
 
 - **Markdown Support:** Create and manage your notes in Markdown format.
 - **Bar Mode:** A minimalistic, always-on-top window for quick note-taking. Toggle between the main window and Bar Mode with `Ctrl+B`.
 - **File Management:** Select and save the location of your notes file.
 - **Simple User Interface:** An intuitive and easy-to-use interface.
+
+![Bar Mode](./assets/demo2.png)
 
 ## Technologies Used
 
@@ -58,6 +64,15 @@ npm run dist
 
 This will create a distributable installer for your operating system in the `dist` folder.
 
-## License
+## Contributing
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
+
+### How to Contribute
+
+1.  Fork the repository.
+2.  Create a new branch (`git checkout -b feature/your-feature-name`).
+3.  Make your changes.
+4.  Commit your changes (`git commit -m 'Add some feature'`).
+5.  Push to the branch (`git push origin feature/your-feature-name`).
+6.  Open a pull request.
