@@ -4,7 +4,7 @@ const path = require("path");
 
 let mainWindow = null;
 let barWindow = null;
-let selectedMdFilePath = null; // Global variable to hold the selected Markdown file path
+let selectedFilePath = null; // Global variable to hold the selected Markdown file path
 const SETTINGS_PATH = path.join(app.getPath("userData"), "settings.json"); //app.getPath("userData") gives a suitable directory for storing app data and we append settings.json to it.
 
 function createMainWindow() {
@@ -67,8 +67,8 @@ function createBarWindow() {
 function saveSettings() {
   fs.writeFileSync(
     SETTINGS_PATH,
-    JSON.stringify({ mdFilePath: selectedMdFilePath || "" }, null, 2),
-  ); //creates or overwrites the settings file with the current mdFilePath
+    JSON.stringify({ filePath: selectedFilePath || "" }, null, 2),
+  ); //creates or overwrites the settings file with the current filePath
 }
 
 function loadSettings() {
@@ -76,10 +76,10 @@ function loadSettings() {
     if (fs.existsSync(SETTINGS_PATH)) {
       const data = fs.readFileSync(SETTINGS_PATH, "utf-8");
       const settings = JSON.parse(data);
-      selectedMdFilePath = settings.mdFilePath || null;
+      selectedFilePath = settings.filePath || null;
     }
   } catch (err) {
-    selectedMdFilePath = null;
+    selectedFilePath = null;
   }
 }
 
@@ -122,16 +122,16 @@ ipcMain.on("changeBarMode", (event, msg) => {
 ipcMain.handle("select-md-file", async () => {
   const result = await dialog.showOpenDialog({
     properties: ["openFile"],
-    filters: [{ name: "Markdown Files", extensions: ["md"] }],
+    filters: [{ name: "Text Files", extensions: ["md", "txt", "html", "css", "js"] }],
   });
   if (result.canceled || result.filePaths.length === 0) return null;
-  selectedMdFilePath = result.filePaths[0]; // storing the selected file path
+  selectedFilePath = result.filePaths[0]; // storing the selected file path
   saveSettings(); // persist to disk
-  return selectedMdFilePath;
+  return selectedFilePath;
 });
 
 ipcMain.handle("get-md-file-path", async () => {
-  return selectedMdFilePath; // return the stored file path to the renderer
+  return selectedFilePath; // return the stored file path to the renderer
 });
 
 ipcMain.handle("append-to-md-file", async (event, filePath, text) => {
