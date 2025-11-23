@@ -31,3 +31,13 @@ body {
   background-size: 300% 100%;
   animation: gradientMove 4s linear infinite;
 }
+
+/* Draggable bar window styling */
+.draggable-bar {
+  -webkit-app-region: drag;
+  user-select: none;
+}
+
+.draggable-bar * {
+  -webkit-app-region: no-drag;
+}

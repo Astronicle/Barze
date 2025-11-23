@@ -88,11 +88,11 @@ function Hero(props) {
     );
   } else {
     return (
-      <>
+      <div className="flex w-screen h-screen flex-col items-center justify-center p-4 bg-[#1d202a] draggable-bar">
         <textarea
           ref={textareaRef}
           placeholder="Enter text..."
-          className="h-24 w-full max-w-2xl mx-auto rounded-lg border-2 border-gray-300 bg-white text-black p-4 text-base shadow focus:outline-none focus:border-blue-500 transition"
+          className="h-full w-full rounded-lg border-2 border-gray-300 bg-white text-black p-4 text-base shadow focus:outline-none focus:border-blue-500 transition"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)} // updates the input text state on change
           onKeyDown={handleTextareaKeyDown} // handles key down events for the textarea mainly for Enter key handling
@@ -103,7 +103,7 @@ function Hero(props) {
             Please select a Markdown file first.
           </div>
         )}
-      </>
+      </div>
     );
   }
 }
