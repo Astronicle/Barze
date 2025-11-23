@@ -90,6 +90,7 @@ function Navbar(props) {
       </>
     );
   }
+  return null;
 }
 
 export default Navbar;

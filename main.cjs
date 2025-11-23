@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain, dialog, Menu } = require("electron");
-const fs = require("fs"); // for file management
+const fs = require("fs"); // for file managementr text...
 const path = require("path");
 
 let mainWindow = null;
